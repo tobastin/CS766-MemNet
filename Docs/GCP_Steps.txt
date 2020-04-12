@@ -1,0 +1,32 @@
+Upload the code
+sudo apt-get install python3-pip
+sudo apt-get install unzip
+sudo apt-get install -y libsm6 libxext6 libxrender-dev
+pip3 install opencv-python
+pip3 install tensorflow     // latest version 2.1.0
+pip3 install tensorflow-gpu // latest version 2.1.0
+pip3 install tensorboard
+
+--> nvidia-smi
+CUDA version 10.1 from VM instance
+NVIDIA from VM instance
+
+Files made compatible to Tensorflow 2.x (every py file)
+import tensorflow.compat.v1 as tf
+
+
+AttributeError: module 'tensorflow_core.compat.v1' has no attribute 'contrib'
+tf.compat.v1.keras.initializers.glorot_normal()
+
+unzip MemNet-Tensorflow.unzip
+cd MemNet-Tensorflow
+chmod 777 train.sh
+./train.sh
+
+--> Downloading from Google Drive link
+python snippet.py <File_ID> <destination file>
+
+
+After collecting the Results -> For visualising the loss : 
+cd cv766Proj/Results/model_output_jpgdeblock [should have the events file inside summary]
+tensorboard --logdir summary/
