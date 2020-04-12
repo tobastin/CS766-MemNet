@@ -10,10 +10,10 @@ import tensorflow.compat.v1 as tf
 
 if __name__ == '__main__':
     # data dir.
-    data_VOC0712 = "/home/apurbaa_juit/CS766-MemNet/Data/snow/Apr10_3K/gt"
+    data_VOC0712 = "/home/apurbaa_juit/CS766-MemNet/datasets/gt"
     data_VOC0712_Quality10 = "/home/apurbaa_juit/CS766-MemNet/datasets/synthetic"
     odirname = "/home/apurbaa_juit/CS766-MemNet/datasets/tfrecords"
-    
+
     # TFRecordWriter, dump to tfrecords file
     if os.path.exists(odirname):
         shutil.rmtree(odirname)
@@ -32,9 +32,9 @@ if __name__ == '__main__':
             #print(image_VOC0712_Quality10)
 
             # Load image.
-            image_clean = tf.gfile.FastGFile(image_VOC0712, 'rb').read()  
+            image_clean = tf.gfile.FastGFile(image_VOC0712, 'rb').read()
             # image data type is string. read and binary.
-            image_noisy = tf.gfile.FastGFile(image_VOC0712_Quality10, 'rb').read()  
+            image_noisy = tf.gfile.FastGFile(image_VOC0712_Quality10, 'rb').read()
 
             # bytes write to Example proto buffer.
             example = tf.train.Example(features=tf.train.Features(feature={
