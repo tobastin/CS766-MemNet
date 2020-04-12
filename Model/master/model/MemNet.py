@@ -7,7 +7,8 @@ import os
 import logging
 from datetime import datetime
 import time
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from MemNet_M6R6 import memnet_m6r6
 from test_MemNet_M6R6 import test_memnet_m6r6
 from utils import save_images

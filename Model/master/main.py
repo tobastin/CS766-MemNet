@@ -33,7 +33,7 @@ def main(_):
             test_model.load(tf_flags.checkpoint)
             # test Set12
             # get psnr and ssim outside
-            save_path = "./datasets/Set12_Recovery"
+            save_path = "/home/apurbaa_juit/CS766-MemNet/datasets/desnow"
             for image_file in glob.glob(tf_flags.testing_set):
                 print("testing {}...".format(image_file))
                 # testing_set is path/*.jpg.

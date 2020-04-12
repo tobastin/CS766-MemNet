@@ -5,22 +5,22 @@ Generate TFRecords file, for training.
 path/image file.
 """
 import os
-import tensorflow as tf
 import shutil
+import tensorflow.compat.v1 as tf
 
 if __name__ == '__main__':
     # data dir.
-    data_VOC0712 = "../datasets/VOC0712"
-    data_VOC0712_Quality10 = "../datasets/VOC0712_Quality10"
-    odirname = "../datasets/tfrecords"
+    data_VOC0712 = "/home/apurbaa_juit/CS766-MemNet/Data/snow/Apr10_3K/gt"
+    data_VOC0712_Quality10 = "/home/apurbaa_juit/CS766-MemNet/datasets/synthetic"
+    odirname = "/home/apurbaa_juit/CS766-MemNet/datasets/tfrecords"
     
     # TFRecordWriter, dump to tfrecords file
     if os.path.exists(odirname):
         shutil.rmtree(odirname)
     os.mkdir(odirname)
-    writer = tf.python_io.TFRecordWriter(os.path.join("../datasets", "tfrecords", "VOC0712.tfrecords"))
+    writer = tf.python_io.TFRecordWriter(os.path.join("/home/apurbaa_juit/CS766-MemNet/datasets", "tfrecords", "snow.tfrecords"))
 
-    with open("../datasets/VOC0712.txt", "r") as fo:
+    with open("/home/apurbaa_juit/CS766-MemNet/datasets/synthetic_snow.txt", "r") as fo:
         # image_files = fo.readlines() # return list
         for line in fo:
             line = line.strip() #  vc\n, 空格! Necessary! String.

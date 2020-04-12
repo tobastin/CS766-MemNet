@@ -3,7 +3,8 @@
 MemNet_M6R6 network, include 6 Memory blocks, ecah block contains 6 Recursive units(ResBlock).
 Only for test, the BN argument, is_training must true. What??
 """
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from utils import res_mod_layers
 
 def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_training=False, reuse=False):
@@ -438,7 +439,7 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
 
         # scale, In Tensorflow, Scale use tf.matmul(x, W) + b don't satisfy. tf.matmul shape is same.
         # alpha and beta is Variable, shape=(channel_num,).
-        alpha1 = tf.get_variable('alpha1', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha1 = tf.get_variable('alpha1', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_01 = alpha1 * HR_recovery_01
 
@@ -447,7 +448,7 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
         HR_recovery_02 = conv_end_02 + noisy_data
 
         # scale
-        alpha2 = tf.get_variable('alpha2', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha2 = tf.get_variable('alpha2', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_02 = alpha2 * HR_recovery_02
 
@@ -456,7 +457,7 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
         HR_recovery_03 = conv_end_03 + noisy_data
 
         # scale
-        alpha3 = tf.get_variable('alpha3', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha3 = tf.get_variable('alpha3', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_03 = alpha3 * HR_recovery_03
 
@@ -465,7 +466,7 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
         HR_recovery_04 = conv_end_04 + noisy_data
 
         # scale
-        alpha4 = tf.get_variable('alpha4', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha4 = tf.get_variable('alpha4', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_04 = alpha4 * HR_recovery_04
 
@@ -474,7 +475,7 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
         HR_recovery_05 = conv_end_05 + noisy_data
 
         # scale
-        alpha5 = tf.get_variable('alpha5', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha5 = tf.get_variable('alpha5', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_05 = alpha5 * HR_recovery_05
 
@@ -483,7 +484,7 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
         HR_recovery_06 = conv_end_06 + noisy_data
 
         # scale
-        alpha6 = tf.get_variable('alpha6', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha6 = tf.get_variable('alpha6', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_06 = alpha6 * HR_recovery_06
 

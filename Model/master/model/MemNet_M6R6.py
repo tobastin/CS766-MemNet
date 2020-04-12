@@ -2,7 +2,8 @@
 """
 MemNet_M6R6 network, include 6 Memory blocks, ecah block contains 6 Recursive units(ResBlock).
 """
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from utils import res_mod_layers
 
 def memnet_m6r6(name, clean_data=None, noisy_data=None, num_filters=64, image_c=1, is_training=False, reuse=False):
@@ -440,8 +441,8 @@ def memnet_m6r6(name, clean_data=None, noisy_data=None, num_filters=64, image_c=
             loss_01 = tf.reduce_mean(tf.squared_difference(HR_recovery_01, clean_data))
         # scale, In Tensorflow, Scale use tf.matmul(x, W) + b don't satisfy. tf.matmul shape is same.
         # alpha and beta is Variable, shape=(channel_num,).
-        alpha1 = tf.get_variable('alpha1', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
-            trainable=True)
+        alpha1 = tf.get_variable('alpha1', [image_c], initializer=tf.keras.initializers.glorot_normal()
+            ,trainable=True)
         weight_output_end_01 = alpha1 * HR_recovery_01
 
         conv_end_02 = res_mod_layers(conv_transition_02, num_filters=image_c, kernel_size=3, strides=[1, 1], 
@@ -451,7 +452,7 @@ def memnet_m6r6(name, clean_data=None, noisy_data=None, num_filters=64, image_c=
             # loss_02, L2 loss
             loss_02 = tf.reduce_mean(tf.squared_difference(HR_recovery_02, clean_data))
         # scale
-        alpha2 = tf.get_variable('alpha2', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha2 = tf.get_variable('alpha2', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_02 = alpha2 * HR_recovery_02
 
@@ -462,7 +463,7 @@ def memnet_m6r6(name, clean_data=None, noisy_data=None, num_filters=64, image_c=
             # loss_03, L2 loss
             loss_03 = tf.reduce_mean(tf.squared_difference(HR_recovery_03, clean_data))
         # scale
-        alpha3 = tf.get_variable('alpha3', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha3 = tf.get_variable('alpha3', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_03 = alpha3 * HR_recovery_03
 
@@ -473,7 +474,7 @@ def memnet_m6r6(name, clean_data=None, noisy_data=None, num_filters=64, image_c=
             # loss_04, L2 loss
             loss_04 = tf.reduce_mean(tf.squared_difference(HR_recovery_04, clean_data))
         # scale
-        alpha4 = tf.get_variable('alpha4', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha4 = tf.get_variable('alpha4', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_04 = alpha4 * HR_recovery_04
 
@@ -484,7 +485,7 @@ def memnet_m6r6(name, clean_data=None, noisy_data=None, num_filters=64, image_c=
             # loss_05, L2 loss
             loss_05 = tf.reduce_mean(tf.squared_difference(HR_recovery_05, clean_data))
         # scale
-        alpha5 = tf.get_variable('alpha5', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha5 = tf.get_variable('alpha5', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_05 = alpha5 * HR_recovery_05
 
@@ -495,7 +496,7 @@ def memnet_m6r6(name, clean_data=None, noisy_data=None, num_filters=64, image_c=
             # loss_06, L2 loss
             loss_06 = tf.reduce_mean(tf.squared_difference(HR_recovery_06, clean_data))
         # scale
-        alpha6 = tf.get_variable('alpha6', [image_c], initializer=tf.contrib.layers.xavier_initializer(), 
+        alpha6 = tf.get_variable('alpha6', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
             trainable=True)
         weight_output_end_06 = alpha6 * HR_recovery_06
 

@@ -7,7 +7,8 @@ import os
 import logging
 from datetime import datetime
 import time
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from MemNet_M6R6 import memnet_m6r6
 from test_MemNet_M6R6 import test_memnet_m6r6
 from utils import save_images
@@ -128,7 +129,7 @@ class MemNet(object):
                 self.sess.run(self.ops, feed_dict=c_feed_dict)
 
                 # save summary
-                if c_step % summary_steps == 0:
+                if (c_step-1) % summary_steps == 0:
                     c_summary = self.sess.run(self.summary, feed_dict=c_feed_dict)
                     self.writer.add_summary(c_summary, c_step)
 
@@ -140,7 +141,7 @@ class MemNet(object):
                     c_time = time.time() # update time
 
                 # save checkpoint
-                if c_step % checkpoint_steps == 0:
+                if (c_step-1) % checkpoint_steps == 0:
                     self.saver.save(self.sess,
                         os.path.join(self.checkpoint_dir, self.checkpoint_prefix),
                         global_step=c_step)
@@ -148,7 +149,7 @@ class MemNet(object):
                         datetime.now(), c_step))
 
                 # save images
-                if c_step % save_steps == 0:
+                if (c_step-1) % save_steps == 0:
                     compress_images, recovery_images, real_images = self.sess.run([self.noisy_images, 
                         self.pre_images, self.clean_images], feed_dict=c_feed_dict)
                     # numpy ndarray.
