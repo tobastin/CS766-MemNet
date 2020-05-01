@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-MemNet_M6R6 network, include 6 Memory blocks, ecah block contains 6 Recursive units(ResBlock).
+MemNet_M6R6 network, include 6 Memory blocks, each block contains 6 Recursive units(ResBlock).
 """
 #import tensorflow as tf
 import tensorflow.compat.v1 as tf

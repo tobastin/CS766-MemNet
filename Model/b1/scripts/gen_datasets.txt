@@ -1,0 +1,5 @@
+python generate_voc0712.py
+python generate_voc0712_compress.py
+python generate_voc0712_resize.py
+python getflist
+python build_tfrecords.py
