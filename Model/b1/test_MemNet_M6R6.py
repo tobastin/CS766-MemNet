@@ -433,6 +433,78 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
             padding="SAME", is_training=is_training)
         # kernel_size=1, stride=1, SAME=VALID
 
+        
+        # 7th Memory block
+        # 1st Recursive block: bn + relu + conv; bn + relu + conv; skip connection
+        c_in = conv_transition_06
+        for _ in range(2):
+            conv07_01 = res_mod_layers(c_in, num_filters=num_filters, kernel_size=3, strides=[1, 1], 
+                padding="SAME", is_training=is_training)
+            c_in = conv07_01
+        # skip connection, conv_transition_06 + c_in
+        # c_in = conv07_01
+        eltwise07_01 = conv_transition_06 + c_in
+
+        # 2nd Recursive block: bn + relu + conv; bn + relu + conv; skip connection
+        c_in = eltwise07_01
+        for _ in range(2):
+            conv07_02 = res_mod_layers(c_in, num_filters=num_filters, kernel_size=3, strides=[1, 1], 
+                padding="SAME", is_training=is_training)
+            c_in = conv07_02
+        # skip connection, eltwise07_01 + c_in
+        # c_in = conv07_02
+        eltwise07_02 = eltwise06_01 + c_in
+
+        # 3rd Recursive block: bn + relu + conv; bn + relu + conv; skip connection
+        c_in = eltwise07_02
+        for _ in range(2):
+            conv07_03 = res_mod_layers(c_in, num_filters=num_filters, kernel_size=3, strides=[1, 1], 
+                padding="SAME", is_training=is_training)
+            c_in = conv07_03
+        # skip connection, eltwise07_02 + c_in
+        # c_in = conv07_03
+        eltwise07_03 = eltwise07_02 + c_in
+
+        # 4th Recursive block: bn + relu + conv; bn + relu + conv; skip connection
+        c_in = eltwise07_03
+        for _ in range(2):
+            conv07_04 = res_mod_layers(c_in, num_filters=num_filters, kernel_size=3, strides=[1, 1], 
+                padding="SAME", is_training=is_training)
+            c_in = conv07_04
+        # skip connection, eltwise07_03 + c_in
+        # c_in = conv07_04
+        eltwise07_04 = eltwise07_03 + c_in
+
+        # 5th Recursive block: bn + relu + conv; bn + relu + conv; skip connection
+        c_in = eltwise07_04
+        for _ in range(2):
+            conv07_05 = res_mod_layers(c_in, num_filters=num_filters, kernel_size=3, strides=[1, 1], 
+                padding="SAME", is_training=is_training)
+            c_in = conv07_05
+        # skip connection, eltwise07_04 + c_in
+        # c_in = conv07_05
+        eltwise07_05 = eltwise07_04 + c_in
+
+        # 6th Recursive block: bn + relu + conv; bn + relu + conv; skip connection
+        c_in = eltwise07_05
+        for _ in range(2):
+            conv07_06 = res_mod_layers(c_in, num_filters=num_filters, kernel_size=3, strides=[1, 1], 
+                padding="SAME", is_training=is_training)
+            c_in = conv07_06
+        # skip connection, eltwise07_05 + c_in
+        # c_in = conv07_06
+        eltwise07_06 = eltwise07_05 + c_in
+
+        # concat
+        concat07 = tf.concat([conv1, conv_transition_01, conv_transition_02, conv_transition_03, 
+            conv_transition_04, conv_transition_05, conv_transition_06, eltwise07_01, eltwise07_02, eltwise07_03, eltwise07_04, 
+            eltwise07_05, eltwise07_06], axis=3)
+
+        conv_transition_07 = res_mod_layers(concat07, num_filters=num_filters, kernel_size=1, strides=[1, 1], 
+            padding="SAME", is_training=is_training)
+        # kernel_size=1, stride=1, SAME=VALID
+
+        ###############################################
         conv_end_01 = res_mod_layers(conv_transition_01, num_filters=image_c, kernel_size=3, strides=[1, 1], 
             padding="SAME", is_training=is_training)
         HR_recovery_01 = conv_end_01 + noisy_data
@@ -488,8 +560,17 @@ def test_memnet_m6r6(name, noisy_data=None, num_filters=64, image_c=1, is_traini
             trainable=True)
         weight_output_end_06 = alpha6 * HR_recovery_06
 
+
+        conv_end_07 = res_mod_layers(conv_transition_07, num_filters=image_c, kernel_size=3, strides=[1, 1], 
+            padding="SAME", is_training=is_training)
+        HR_recovery_07 = conv_end_07 + noisy_data
+        # scale
+        alpha7 = tf.get_variable('alpha7', [image_c], initializer=tf.keras.initializers.glorot_normal(), 
+            trainable=True)
+        weight_output_end_07 = alpha7 * HR_recovery_07
+
         # HR_recovery, MemNet output.
         HR_recovery = weight_output_end_01 + weight_output_end_02 + weight_output_end_03 + weight_output_end_04 + \
-            weight_output_end_05 + weight_output_end_06
+            weight_output_end_05 + weight_output_end_06 + weight_output_end_07
 
         return HR_recovery
