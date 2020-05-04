@@ -4,11 +4,11 @@ Project based on : https://github.com/lyatdawn/MemNet-Tensorflow, http://cvlab.c
 
 # Installation
 
-sudo apt-get install -y libsm6 libxext6 libxrender-dev
-pip3 install opencv-python
-pip3 install tensorflow     // v2.x
-pip3 install tensorflow-gpu // v2.x 
-pip3 install tensorboard 
+sudo apt-get install -y libsm6 libxext6 libxrender-dev\
+pip3 install opencv-python\
+pip3 install tensorflow     // v2.x\
+pip3 install tensorflow-gpu // v2.x\
+pip3 install tensorboard
 
 
 # Datasets
@@ -24,3 +24,8 @@ pip3 install tensorboard
 * Model/master : based on MemNet baseline (M6R6)
 * Model/b1 : updated model for M7R6
 * Model/master/scripts : scripts for generating different usecase train/test data
+
+# Contact
+bjoseph5@wisc.edu\
+pgupta52@wisc.edu\
+bhattachar26@wisc.edu
